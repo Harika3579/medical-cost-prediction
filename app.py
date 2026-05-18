@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import joblib
 
-st.write("APP STARTED")
 # Load model
 model = joblib.load("medical_cost_model.pkl")
 
