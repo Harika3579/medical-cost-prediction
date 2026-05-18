@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import joblib
 
-model = joblib.load("medical_cost_model.pkl")
+model = joblib.load("model.pkl")
 
 st.title("🏥 Medical Cost Prediction App")
 
