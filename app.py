@@ -1,30 +1,35 @@
 import os
 import streamlit as st
-
-st.write("Model file exists:", os.path.exists("medical_cost_model.pkl"))
-import streamlit as st
 import pandas as pd
-import numpy as np
 import joblib
 
-# Load model
+# ==============================
+# Load Model
+# ==============================
 model = joblib.load("medical_cost_model.pkl")
 
-st.title("🏥 Medical Cost Prediction App")
+st.title("🏥 Medical Insurance Cost Prediction")
 
-st.write("Enter patient details to predict insurance cost")
+st.write("Enter patient details")
 
+# ==============================
 # Inputs
-age = st.number_input("Age", 18, 100)
+# ==============================
+age = st.number_input("Age", 18, 100, 25)
+
 sex = st.selectbox("Sex", ["male", "female"])
-bmi = st.number_input("BMI")
-children = st.number_input("Children", 0, 10)
+bmi = st.number_input("BMI", 10.0, 50.0, 25.0)
+children = st.number_input("Children", 0, 10, 0)
+
 smoker = st.selectbox("Smoker", ["yes", "no"])
 region = st.selectbox("Region", ["southwest", "southeast", "northwest", "northeast"])
 
-# Encoding (same as training)
+# ==============================
+# Encoding (must match training)
+# ==============================
 sex = 1 if sex == "male" else 0
 smoker = 1 if smoker == "yes" else 0
+
 region_map = {
     "southwest": 0,
     "southeast": 1,
@@ -33,21 +38,35 @@ region_map = {
 }
 region = region_map[region]
 
-# Feature engineering (same as training)
-bmi_category = 0 if bmi < 18.5 else 1 if bmi < 25 else 2 if bmi < 30 else 3
-age_group = 0 if age < 25 else 1 if age < 40 else 2 if age < 60 else 3
+# ==============================
+# FINAL INPUT (ONLY ORIGINAL FEATURES)
+# ==============================
+input_data = pd.DataFrame([[
+    age,
+    sex,
+    bmi,
+    children,
+    smoker,
+    region
+]], columns=[
+    "age",
+    "sex",
+    "bmi",
+    "children",
+    "smoker",
+    "region"
+])
 
-smoker_bmi = smoker * bmi
-smoker_age = smoker * age
+# ==============================
+# Debug check
+# ==============================
+st.write("Model loaded:", os.path.exists("medical_cost_model.pkl"))
 
-# Input array
-input_data = np.array([[age, sex, bmi, children, smoker, region,
-                        bmi_category, age_group,
-                        smoker_bmi, smoker_age]])
+# ==============================
+# Prediction
+# ==============================
+if st.button("Predict Cost"):
 
-# Predict
-if st.button("Predict Medical Cost"):
-    prediction_log = model.predict(input_data)
-    prediction = np.expm1(prediction_log)
+    prediction = model.predict(input_data)
 
     st.success(f"💰 Predicted Insurance Cost: ₹ {prediction[0]:,.2f}")
