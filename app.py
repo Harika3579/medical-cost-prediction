@@ -3,9 +3,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+from xgboost import XGBRegressor
 
-# Load model
-model = joblib.load("medical_cost_model (2).pkl")
+model = XGBRegressor()
+model.load_model("medical_cost_model.json")
 
 st.title("🏥 Medical Cost Prediction App")
 
