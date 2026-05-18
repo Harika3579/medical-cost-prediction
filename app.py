@@ -1,3 +1,7 @@
+import os
+import streamlit as st
+
+st.write("Model file exists:", os.path.exists("medical_cost_model.pkl"))
 import streamlit as st
 import pandas as pd
 import numpy as np
