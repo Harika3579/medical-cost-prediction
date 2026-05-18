@@ -71,11 +71,6 @@ input_data = pd.DataFrame([[
     "smoker_age"
 ])
 
-# ------------------------------
-# Debug
-# ------------------------------
-st.write("Model loaded:", os.path.exists("medical_cost_model.pkl"))
-st.write("Input shape:", input_data.shape)
 
 # ------------------------------
 # Predict
