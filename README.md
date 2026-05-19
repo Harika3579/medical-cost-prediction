@@ -5,7 +5,7 @@ A machine learning web application that predicts medical insurance charges based
 ---
 
 ## 🚀 Live Demo
-👉 https://your-streamlit-app-link.streamlit.app
+👉 https://medical-cost-prediction-h4x9et8zub5mhcibxm7mmw.streamlit.app
 
 ---
 
